@@ -1,0 +1,254 @@
+body {
+    background: url(../img/blurrybg.jpg) no-repeat center center;
+}
+
+.logo{
+    font-weight: normal;
+    margin: 15px 0 5px;
+}
+.logo .label{
+    margin-left: 10px;
+}
+
+#main {
+    /*background: #F0F0F0;*/
+    background: transparent;
+    padding: 20px 0;
+    text-align: center;
+}
+
+#main .container {
+    position: relative;
+}
+
+#playerFrame {
+    display: none;
+    margin: 0 auto;
+}
+
+#playerInfo {
+    text-align: center;
+    padding: 0 10px;
+}
+
+#playerInfo ol, ul, li {
+    list-style: none
+}
+
+#playerInfo ol, ul {
+    margin: 0;
+}
+
+#changeBrowser {
+    text-align: center;
+}
+
+#changeBrowser img {
+    width: 240px;
+    height: 240px;
+}
+
+#playerContainer {
+    /*position: absolute;*/
+    /*right: 20px;*/
+    /*top: 50px;*/
+    /*z-index: 9999;*/
+    text-align: center;
+    width: 200px;
+    height: 200px;
+    background: url(../img/logo-border.png) no-repeat center;
+    /*padding: 0 30px;*/
+    position: relative;
+}
+
+
+
+#playerNote {
+    position: absolute;
+    left: 70px;
+    top: 70px;
+    width: 60px;
+    height: 60px;
+    display: block;
+}
+
+.rotating {
+    -webkit-animation: rotate 2s infinite linear;
+    -moz-animation: rotate 2s infinite linear;
+    -ms-animation: rotate 2s infinite linear;
+    -o-animation: rotate 2s infinite linear;
+    animation: rotate 2s infinite linear;
+    -webkit-animation-play-state: running;
+    -moz-animation-play-state: running;
+    -ms-animation-play-state: running;
+    -o-animation-play-state: running;
+    animation-play-state: running;
+}
+
+.rotating-paused{
+    -webkit-animation-play-state:paused;
+    -moz-animation-play-state:paused;
+}
+
+/* rotate */
+
+@-webkit-keyframes rotate {
+    from {
+        -webkit-transform: rotate(0deg)
+    }
+    to {
+        -webkit-transform: rotate(360deg)
+    }
+}
+
+@-moz-keyframes rotate {
+    from {
+        -moz-transform: rotate(0deg)
+    }
+    to {
+        -moz-transform: rotate(360deg)
+    }
+}
+
+@-ms-keyframes rotate {
+    from {
+        -ms-transform: rotate(0deg)
+    }
+    to {
+        -ms-transform: rotate(360deg)
+    }
+}
+
+@-o-keyframes rotate {
+    from {
+        -o-transform: rotate(0deg)
+    }
+    to {
+        -o-transform: rotate(360deg)
+    }
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg)
+    }
+    to {
+        transform: rotate(360deg)
+    }
+}
+
+/* disable text select */
+#menuContainer {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: -moz-none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#menuContainer ol {
+    display: inline-block;
+    margin: 0 auto;
+}
+
+#menuContainer ol li {
+    float: left;
+    text-align: center;
+}
+
+/*
+#menuContainer ol li a {
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+
+    -webkit-opacity: 0.9;
+    -moz-opacity: 0.9;
+    opacity: 0.9;
+}
+
+#menuContainer ol li a:hover {
+    -webkit-opacity: 1;
+    -moz-opacity: 1;
+    opacity: 1;
+}
+*/
+
+#menuContainer .asideButtonContainer {
+    padding-top: 70px;
+}
+
+#menuContainer .asideButtonContainer a {
+    display: block;
+    overflow: hidden;
+    width: 60px;
+    height: 60px;
+}
+
+
+#menuContainer .mainButtonContainer {
+}
+
+#pro img {
+    width: 22px;
+    height: 22px;
+    margin-top: 17px;
+    /*display: none;*/
+}
+
+#skip img {
+    width: 30px;
+    height: 30px;
+    margin-top: 14px;
+}
+
+.songName {
+    font-family: 'Courgette', cursive;
+    font-size: 40px;
+    line-height: 1.3em;
+    font-weight: bold;
+    height: 1.3em;
+    overflow: hidden;
+    display: block;
+    text-transform: capitalize;
+}
+
+.songExternal {
+    /*display: none;*/
+    visibility: hidden;
+}
+
+.songExternal input {
+    width: 240px;
+}
+
+.songExternal img {
+    width: 16px;
+    height: 16px;
+    margin-bottom: 3px;
+    margin-left: 3px;
+}
+
+#songTools img {
+    margin: 10px;
+}
+
+/* Mobile phone */
+@media (max-width: 767px) {
+
+    body {
+        padding:0;
+    }
+
+    header, footer {
+        padding: 0 10px;
+        text-align: center;
+    }
+
+    #changeBrowser img {
+        width: 80px;
+        height: 80px;
+    }
+
+}

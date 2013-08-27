@@ -1,0 +1,142 @@
+<html>
+<head>
+    <title>HTML to JS String Converter</title>
+    <link rel="stylesheet" href="assets/css/bootstrap-combined.no-icons.min.css">
+    <style>
+
+        #main{
+
+        }
+        #htmlContainer{
+            float:left;
+        }
+        #html{
+            width: 300px;
+            height: 400px;
+            border-top-right-radius: 0;
+        }
+        #stringContainer{
+            float:left;
+        }
+        #string{
+            width: 300px;
+            height: 400px;
+            border-bottom-left-radius: 0;
+        }
+        #btnContainer{
+            float:left;
+            position: relative;
+            width: 140px;
+            height: 420px;
+            display: block;
+        }
+        #convert{
+            height: 180px;
+        }
+        #reverse{
+            height: 180px;
+        }
+        .input-append{
+            position: absolute;
+            left: 0;
+            top: 20px;
+            z-index:9999;
+        }
+        .input-prepend{
+            position: absolute;
+            right: 0;
+            bottom: -10px;
+            z-index:9998;
+        }
+        .desc{
+            text-align: center;
+        }
+        .desc code{
+            border: 0 none;
+        }
+        .input-prepend .desc{
+            text-align: right;
+        }
+        </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <h1>HTML to JS String Converter</h1>
+        <p class="lead">Convert html snippet into JS string which can be used in JS template.</p>
+        
+        <div id="main">
+
+            <div id="htmlContainer">
+                <div class="desc"><code>HTML Snippet</code></div>
+                <textarea id="html"><p>Paste HTML code here</p></textarea>
+            </div>
+            
+            <div id="btnContainer">
+                <div class="input-append">
+                    <button id="convert" class="btn">Convert</button>
+                </div>
+                <div class="input-prepend">
+                    <button id="reverse" class="btn">Reverse</button>
+                </div>
+            </div>
+
+            <div id="stringContainer">
+                <div class="desc"><code>JS String</code></div>
+                <textarea id="string"></textarea>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script type="text/javascript">
+        var h = document.getElementById("html");
+        var s = document.getElementById("string");
+        var c = document.getElementById("convert");
+        var r = document.getElementById("reverse");
+
+        c.onclick = function() {
+            s.value = convert(h.value);
+            h.value = '';
+        }
+
+        r.onclick = function() {
+            h.value = reverse(s.value);
+            s.value = '';
+        }
+
+        function convert(str) {
+            var map = {
+                '<' : '\\x3c',
+                '>' : '\\x3e',
+                '\n': '\\x0a',
+                '\/' : '\\\/',  
+                '\\': '\\\\',
+                '\"' : '\\\"',
+                '\'': '\\\''
+            };
+
+            var reg = '';
+            for(var i in map){
+                reg += i;
+            }
+            reg = new RegExp('[' + reg + ']' ,'g');
+
+            var result = str.replace(reg, function(c) { 
+                return map[c]; 
+            });
+
+            return result;
+        }
+
+
+        function reverse(str) {
+            eval('temp = "' + str + '"');
+            return temp;
+        }
+
+    </script>
+</body>
+</html>

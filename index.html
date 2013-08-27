@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>乱耳电台 / Luan Er Radio </title>
+    <!-- css -->
+    <link href="assets/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="assets/css/index.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Courgette' rel='stylesheet' type='text/css'>
+</head>
+<body>
+
+    <header>
+        <section class="container">
+            <h3 class="logo">乱耳电台</h3>
+            <p>
+                <span class="label label-info">Luan'er radio has sth different</span>
+            </p>
+        </section>
+    </header>
+
+    <div id="main">
+        <section class="container">
+
+            <div id="menuContainer">
+                <ol>
+                    <li class="asideButtonContainer">
+                        <a href="javascript:;" id="pro"><img src="assets/img/pro.png" alt="Like" title="Like"/></a>
+                    </li>
+                    <li class="mainButtonContainer">
+                        <div id="playerContainer">
+                            <span id="playerNote"><img src="assets/img/logo-center.png" alt="" title=""/></span>
+                        </div>
+                        <iframe id="playerFrame" src="" scrolling="no" frameborder="no" border="0" ></iframe>
+                    </li>
+                    <li class="asideButtonContainer">
+                        <a href="javascript:;" id="skip"><img src="assets/img/next.png" alt="Next" title="Next"/></a>
+                    </li>
+                </ol>
+            </div>
+
+            <div id="playerInfo"></div>
+
+        </section>   
+    </div>
+
+    <footer>
+        <section class="container">
+            <p>
+                Powered by <a href="http://backbonejs.org/">Backbone</a>, <a href="twitter.github.com/bootstrap/">Bootstrap</a>, <a href="http://jquery.com">jQuery</a>, <a href="http://jplayer.org/">jPlayer</a>, <a href="http://www.google.com/fonts/">Google Fonts</a>
+            </p>
+            <p>
+                Luaner.com does NOT store any media resources.
+                Powered by <a href="http://music.baidu.com">Baidu Music</a>, <a href="http://open.baidu.com">Baidu App Engine</a>
+            </p>
+        </section>
+    </footer>
+
+    <!-- js -->
+    <script type="text/javascript" data-main="assets/js/index.js" src="assets/js/require.js"></script>
+
+</body>
+</html>
