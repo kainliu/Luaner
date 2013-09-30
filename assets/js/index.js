@@ -6,8 +6,11 @@ requirejs.config({
         'jquery.min': {
             exports: '$'
         },
+        'underscore': {
+            exports: '_'
+        },
         'backbone': {
-            deps: ['underscore.min'],
+            deps: ['underscore'],
             exports: 'Backbone'
         }
     }
@@ -15,7 +18,7 @@ requirejs.config({
 
 // ====== requirejs starts
 // =======================
-requirejs(['jquery.min', 'backbone', 'mustache'], function ($, Backbone, Mustache) {
+requirejs(['jquery.min', 'underscore' ,'backbone', 'mustache'], function ($, _, Backbone, Mustache) {
 
     // ====== requirejs factory
     // ========================
@@ -208,7 +211,7 @@ requirejs(['jquery.min', 'backbone', 'mustache'], function ($, Backbone, Mustach
 
             // TODO Limit fails
             // if (fn.fail > 10) {
-            //    return showError('requestError');
+            //    return showError('request');
             // }
 
             // Limit requests during a period
@@ -259,7 +262,14 @@ requirejs(['jquery.min', 'backbone', 'mustache'], function ($, Backbone, Mustach
             // Fetch playlist containing song ids
             requestList(ids, function (data) {
                 // Fetch song details
-                requestDetail(data, function (data) {
+                // TODO: use all info, and merge with the second request
+                // Only use id now
+                var ids = [];
+                _.each(data.songList, function(song){
+                    ids.push(song.songId);
+                });
+
+                requestDetail(ids, function (data) {
                     // Use try...catch... to handle external errors
                     safeExecute(songParser, data);
                 });
@@ -312,7 +322,7 @@ requirejs(['jquery.min', 'backbone', 'mustache'], function ($, Backbone, Mustach
 
             // Bind resize event
             $(window).resize(function() {
-                me.updateAlign();
+                me.updateLayout();
             });
 
             this.listenTo(songs, 'begin', this.render);
@@ -351,10 +361,7 @@ requirejs(['jquery.min', 'backbone', 'mustache'], function ($, Backbone, Mustach
          *
          */
         updateLayout: function (){
-
             this.updateAlign();
-            // Bind to resize
-
         },
 
         /**
@@ -372,22 +379,6 @@ requirejs(['jquery.min', 'backbone', 'mustache'], function ($, Backbone, Mustach
                 'padding-bottom': p + 'px'
             });
 
-//            var verticalTotal = 300;
-//            var verticalMargin;
-//            var el = this.$el;
-//
-//            // Breakpoint for handhole device
-//            if ($(document).width() < 768) {
-//                verticalMargin = 20;
-//            }
-//            else {
-//                verticalMargin = 0.5 * (verticalTotal - parseInt(el.css('height'), 10));
-//            }
-//
-//            el.css({
-//                'margin-top': verticalMargin,
-//                'margin-bottom': verticalMargin
-//            }).hide().fadeIn('slow');
         }
 
 
@@ -480,11 +471,6 @@ requirejs(['jquery.min', 'backbone', 'mustache'], function ($, Backbone, Mustach
                     appPlayer.ready = true;
                     break;
 
-                // player makes error like can not reach URL
-                case 'error':
-                    showError('playerError');
-                    break;
-
                 case 'begin':
                     console.debug('song begin');
                     songs.begin();
@@ -502,6 +488,11 @@ requirejs(['jquery.min', 'backbone', 'mustache'], function ($, Backbone, Mustach
                 case 'end':
                     console.debug('song end');
                     songs.end();
+                    break;
+
+                // Otherwise, show error message.
+                default:
+                    showError(data);
                     break;
             }
         }
@@ -603,7 +594,8 @@ requirejs(['jquery.min', 'backbone', 'mustache'], function ($, Backbone, Mustach
         var url = 'list.php?s=' + ids.join(',');
 
         $.ajax({
-            url: url
+            url: url,
+            dataType: "jsonp"
         }).done(callback);
     }
 
@@ -660,29 +652,34 @@ requirejs(['jquery.min', 'backbone', 'mustache'], function ($, Backbone, Mustach
                 content += 'Your browser is not compatible.';
                 break;
 
-            case 'requestError':
-                content += 'No response from server yet. Please refresh after 5 mins.';
+            case 'request':
+                content += 'No response from server yet. Please refresh after a while.';
                 break;
 
-            case 'playerError':
+            case 'player':
                 content += 'Some error happens to the audio player';
                 break;
 
+            case 'error':
+                content += 'Something unexpected happens..';
+                break;
+
             default:
-                content += 'Some error happens.';
+                content += msg;
                 break;
         }
 
-        var template = '<div id="changeBrowser" class="container">' +
-            '<ul>' +
-            '<li>{{content}}</li>' +
-            '<li class="muted">The following browsers are fully tested and well supported.</li>' +
-            '<li>' +
-                '<a href="http://www.google.com/search?q=download+chrome"><img src="assets/img/browser-icon-chrome.png"/></a>' +
-                '<a href="http://www.google.com/search?q=download+firefox"><img src="assets/img/browser-icon-firefox.png"/></a>' +
-                '<a href="http://www.google.com/search?q=download+safari"><img src="assets/img/browser-icon-safari.png"/></a>' +
-            '</li>' +
-            '</ul>' +
+        var template = '' +
+            '<div id="errorContainer" class="container">' +
+
+                '<h3>{{content}}</h3>' +
+                '<p>These browsers are fully tested and well supported:</p>' +
+                '<p>' +
+                    '<a href="http://www.google.com/search?q=download+chrome"> Chrome /</a>' +
+                    '<a href="http://www.google.com/search?q=download+firefox"> Firefox /</a>' +
+                    '<a href="http://www.google.com/search?q=download+safari"> Safari </a>' +
+                '</p>' +
+
             '</div>';
 
         $('#main').html(Mustache.to_html(template, {

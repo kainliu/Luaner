@@ -19,8 +19,13 @@ $(document).ready(function () {
 
         // jPlayer error
         player.g.bind($.jPlayer.event.error, function (event) {
-            // console.log(event.jPlayer);
-            callApp('error');
+            var error = 'error';
+            try {
+                error = event.jPlayer.error.message;
+            }catch(e){
+            }
+
+            callApp(error);
         })
 
         initMessager();
